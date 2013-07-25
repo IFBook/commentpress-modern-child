@@ -60,8 +60,8 @@ function cpmodernchild_enqueue_styles() {
 	}
 	
 	// dequeue parent theme colour styles
-	wp_dequeue_style( 'cp_webfont_lato_css' );
-	wp_dequeue_style( 'cp_colours_css' );
+	//wp_dequeue_style( 'cp_webfont_lato_css' );
+	//wp_dequeue_style( 'cp_colours_css' );
 	
 	// add child theme's css file
 	wp_enqueue_style( 
