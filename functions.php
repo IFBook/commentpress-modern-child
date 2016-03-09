@@ -1,63 +1,53 @@
 <?php /*
-===============================================================
+================================================================================
 Commentpress Modern Child Theme Functions
-===============================================================
+================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
----------------------------------------------------------------
+--------------------------------------------------------------------------------
 NOTES
 
 Example theme amendments and overrides.
 
----------------------------------------------------------------
+This file is loaded before the Commentpress Modern Theme's functions.php file,
+so changes and updates can be made here. Most theme-related functions are
+pluggable, so if they are defined here, they will override the ones defined in
+the Commentpress Modern Theme or common theme functions file.
+
+--------------------------------------------------------------------------------
 */
 
 
 
-
 /**
- * @description: augment the CommentPress Modern Theme setup function
- * @todo:
- *
+ * Augment the CommentPress Modern Theme setup function.
  */
-function cpmodernchild_setup(
-
-) { //-->
+function commentpress_modern_child_setup() {
 
 	/**
 	 * Make theme available for translation.
-	 * Translations can be added to the /languages/ directory of the child theme.
+	 *
+	 * Translations can be added to the /languages directory of the child theme.
 	 */
-	load_theme_textdomain(
-
-		'cpmodernchild-theme',
+	load_child_theme_textdomain(
+		'commentpress-modern-child',
 		get_stylesheet_directory() . '/languages'
-
 	);
 
 }
 
-// add after theme setup hook
-add_action( 'after_setup_theme', 'cpmodernchild_setup' );
-
-
-
+// hook into after_setup_theme
+add_action( 'after_setup_theme', 'commentpress_modern_child_setup' );
 
 
 
 /**
- * @description: override styles by enqueueing as late as we can
- * @todo:
+ * Enqueue child theme styles.
  *
+ * Styles can be overridden because the child theme is:
+ * 1. enqueueing later than the CommentPress Modern Theme
+ * 2. making the file dependent on the CommentPress Modern Theme's stylesheet
  */
-function cpmodernchild_enqueue_styles() {
-
-	// init
-	$dev = '';
-
-	// check for dev
-	if ( defined( 'SCRIPT_DEBUG' ) AND SCRIPT_DEBUG === true ) {
-		$dev = '.dev';
-	}
+function commentpress_modern_child_enqueue_styles() {
 
 	// dequeue parent theme colour styles
 	//wp_dequeue_style( 'cp_webfont_lato_css' );
@@ -65,21 +55,14 @@ function cpmodernchild_enqueue_styles() {
 
 	// add child theme's css file
 	wp_enqueue_style(
-
-		'cpmodernchild_css',
-		get_stylesheet_directory_uri() . '/assets/css/style-overrides'.$dev.'.css',
+		'commentpress_modern_child_css',
+		get_stylesheet_directory_uri() . '/assets/css/style-overrides.css',
 		array( 'cp_screen_css' ),
 		'1.0', // version
 		'all' // media
-
 	);
 
 }
 
-// add a filter for the above
-add_filter( 'wp_enqueue_scripts', 'cpmodernchild_enqueue_styles', 998 );
-
-
-
-
-
+// add action for the above
+add_action( 'wp_enqueue_scripts', 'commentpress_modern_child_enqueue_styles', 998 );
